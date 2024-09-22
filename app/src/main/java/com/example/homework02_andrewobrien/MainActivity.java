@@ -2,6 +2,7 @@ package com.example.homework02_andrewobrien;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
@@ -14,6 +15,8 @@ import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
+
+import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity
 {
@@ -34,9 +37,14 @@ public class MainActivity extends AppCompatActivity
     //LISTVIEW
     ListView lv_j_colorList;
 
-    //CONSTRAINT LAYOUT
+    //CONSTRAINT LAYOUT (BACKGROUND)
     ConstraintLayout main_j_background;
 
+    //REFERENCE TO ADAPTER
+    ColorListAdapter adapter;
+
+    //ARRAY LIST
+    ArrayList <ColorInfo> listOfColors;
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
@@ -76,9 +84,12 @@ public class MainActivity extends AppCompatActivity
         seekbarChangeEvent();
         updateHexColor();
 
+        listOfColors = new ArrayList<ColorInfo>();
         //testing
         main_j_background.setBackgroundColor(Color.parseColor(tv_j_hexRepresentation.getText().toString()));
 
+        saveColorButtonClickEvent();
+        fillListView();
     }
 
     private void seekbarChangeEvent()
@@ -158,7 +169,9 @@ public class MainActivity extends AppCompatActivity
             @Override
             public void onClick(View view)
             {
+                Log.d("TESTING: BTN CLICK", "You have reached the inside of saveColorButtonCLickEvent");
                 //on button click, do this
+                addColorToList();
             }
         });
     }
@@ -197,6 +210,37 @@ public class MainActivity extends AppCompatActivity
         tv_j_hexRepresentation.setText(finalHexColor.toUpperCase());
     }
 
+    private void addColorToList()
+    {
+        Log.d("TESTING 2: ADD COLOR TO LIST", "You are inside the function addColorToList()");
 
+        //create a new ColorInfo object
+        ColorInfo colorToAdd = new ColorInfo();
+        //fill data into the new ColorInfo object
+        //get the information for the TextViews
+
+        colorToAdd.setRedValue(tv_j_redValue.getText().toString());
+        colorToAdd.setGreenValue(tv_j_greenValue.getText().toString());
+        colorToAdd.setBlueValue(tv_j_blueValue.getText().toString());
+        colorToAdd.setHexValue(tv_j_hexRepresentation.getText().toString());
+
+        //add to list
+        listOfColors.add(colorToAdd);
+        //notify adapter
+        adapter.notifyDataSetChanged();
+
+        //reset the bars
+        sb_j_redSeekBar.setProgress(255);
+        sb_j_greenSeekBar.setProgress(255);
+        sb_j_blueSeekBar.setProgress(255);
+
+    }
+
+    private void fillListView()
+    {
+        adapter = new ColorListAdapter(this, listOfColors);
+        //set the listview adapter
+        lv_j_colorList.setAdapter(adapter);
+    }
 
 }
