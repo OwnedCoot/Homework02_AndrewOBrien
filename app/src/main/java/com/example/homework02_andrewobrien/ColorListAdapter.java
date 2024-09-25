@@ -1,11 +1,14 @@
 package com.example.homework02_andrewobrien;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
+
+import androidx.constraintlayout.widget.ConstraintLayout;
 
 import java.util.ArrayList;
 
@@ -52,6 +55,7 @@ public class ColorListAdapter extends BaseAdapter
         TextView greenValue = view.findViewById(R.id.tv_v_cc_greenValue);
         TextView blueValue  = view.findViewById(R.id.tv_v_cc_blueValue);
         TextView hexValue   = view.findViewById(R.id.tv_v_cc_hexValue);
+        ConstraintLayout background = view.findViewById(R.id.cl_v_cc_background);
 
         //get data from this specific color from the colorList
         //I can access different elements based off the i value that is passed to this function
@@ -62,6 +66,7 @@ public class ColorListAdapter extends BaseAdapter
         greenValue.setText(clr.getGreenValue());
         blueValue.setText(clr.getGreenValue());
         hexValue.setText(clr.getHexValue());
+        background.setBackgroundColor(Color.parseColor(hexValue.getText().toString()));
 
         return view;
     }

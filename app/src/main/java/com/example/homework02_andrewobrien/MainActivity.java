@@ -4,6 +4,7 @@ import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SeekBar;
@@ -90,6 +91,8 @@ public class MainActivity extends AppCompatActivity
 
         saveColorButtonClickEvent();
         fillListView();
+        listViewEventListener();
+        changeTextColor();
     }
 
     private void seekbarChangeEvent()
@@ -104,6 +107,7 @@ public class MainActivity extends AppCompatActivity
                 updateHexColor();
                 //change background
                 main_j_background.setBackgroundColor(Color.parseColor(tv_j_hexRepresentation.getText().toString()));
+                changeTextColor();
             }
 
             @Override
@@ -126,6 +130,7 @@ public class MainActivity extends AppCompatActivity
                 updateHexColor();
                 //change background
                 main_j_background.setBackgroundColor(Color.parseColor(tv_j_hexRepresentation.getText().toString()));
+                changeTextColor();
             }
 
             @Override
@@ -148,6 +153,7 @@ public class MainActivity extends AppCompatActivity
                 updateHexColor();
                 //change background
                 main_j_background.setBackgroundColor(Color.parseColor(tv_j_hexRepresentation.getText().toString()));
+                changeTextColor();
             }
 
             @Override
@@ -210,6 +216,24 @@ public class MainActivity extends AppCompatActivity
         tv_j_hexRepresentation.setText(finalHexColor.toUpperCase());
     }
 
+    private void listViewEventListener()
+    {
+        lv_j_colorList.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l)
+            {
+                //Get the cell that was clicked
+                ColorInfo clickedColor = listOfColors.get(i);
+                //set the main GUI to the color
+                main_j_background.setBackgroundColor(Color.parseColor(clickedColor.getHexValue()));
+                sb_j_redSeekBar.setProgress(Integer.parseInt(clickedColor.getRedValue()));
+                sb_j_greenSeekBar.setProgress(Integer.parseInt(clickedColor.getGreenValue()));
+                sb_j_blueSeekBar.setProgress(Integer.parseInt(clickedColor.getBlueValue()));
+                tv_j_hexRepresentation.setText(clickedColor.getHexValue());
+            }
+        });
+    }
     private void addColorToList()
     {
         Log.d("TESTING 2: ADD COLOR TO LIST", "You are inside the function addColorToList()");
@@ -243,4 +267,34 @@ public class MainActivity extends AppCompatActivity
         lv_j_colorList.setAdapter(adapter);
     }
 
+    private void changeTextColor()
+    {
+        int colorIntForm = Color.parseColor(tv_j_hexRepresentation.getText().toString());
+        //testing
+        Log.d("COLOR INT FORM:", String.valueOf(colorIntForm));
+
+        int red = Color.red(colorIntForm);
+        int green = Color.green(colorIntForm);
+        int blue = Color.blue(colorIntForm);
+
+        //calculation I found on stackoverflow to calculate brightness
+        double brightness = (red * 0.299 + green * 0.587 + blue * 0.114);
+
+        //128 is the halfway point between dark and light
+        if (brightness < 128)
+        {
+            //set all text to white
+            tv_j_redValue.setTextColor(Color.WHITE);
+            tv_j_greenValue.setTextColor(Color.WHITE);
+            tv_j_blueValue.setTextColor(Color.WHITE);
+            tv_j_hexRepresentation.setTextColor(Color.WHITE);
+        }
+        else
+        {
+            tv_j_redValue.setTextColor(Color.BLACK);
+            tv_j_greenValue.setTextColor(Color.BLACK);
+            tv_j_blueValue.setTextColor(Color.BLACK);
+            tv_j_hexRepresentation.setTextColor(Color.BLACK);
+        }
+    }
 }
