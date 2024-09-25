@@ -32,6 +32,11 @@ public class MainActivity extends AppCompatActivity
     TextView tv_j_blueValue;
     TextView tv_j_hexRepresentation;
 
+    TextView tv_j_redTitle;
+    TextView tv_j_greenTitle;
+    TextView tv_j_blueTitle;
+    TextView tv_j_hexRepresentationTitle;
+
     //BUTTON
     Button btn_j_saveColor;
 
@@ -64,6 +69,11 @@ public class MainActivity extends AppCompatActivity
         tv_j_greenValue        = findViewById(R.id.tv_v_greenValue);
         tv_j_blueValue         = findViewById(R.id.tv_v_blueValue);
         tv_j_hexRepresentation = findViewById(R.id.tv_v_hexRepresentation);
+
+        tv_j_redTitle = findViewById(R.id.tv_v_redTitle);
+        tv_j_greenTitle = findViewById(R.id.tv_v_greenTitle);
+        tv_j_blueTitle = findViewById(R.id.tv_v_blueTitle);
+        tv_j_hexRepresentationTitle = findViewById(R.id.tv_v_hexRepresentationTitle);
 
         //BUTTON
         btn_j_saveColor        = findViewById(R.id.btn_v_saveColor);
@@ -288,6 +298,10 @@ public class MainActivity extends AppCompatActivity
             tv_j_greenValue.setTextColor(Color.WHITE);
             tv_j_blueValue.setTextColor(Color.WHITE);
             tv_j_hexRepresentation.setTextColor(Color.WHITE);
+            tv_j_redTitle.setTextColor(Color.WHITE);
+            tv_j_greenTitle.setTextColor(Color.WHITE);
+            tv_j_blueTitle.setTextColor(Color.WHITE);
+            tv_j_hexRepresentationTitle.setTextColor(Color.WHITE);
         }
         else
         {
@@ -295,6 +309,10 @@ public class MainActivity extends AppCompatActivity
             tv_j_greenValue.setTextColor(Color.BLACK);
             tv_j_blueValue.setTextColor(Color.BLACK);
             tv_j_hexRepresentation.setTextColor(Color.BLACK);
+            tv_j_redTitle.setTextColor(Color.BLACK);
+            tv_j_greenTitle.setTextColor(Color.BLACK);
+            tv_j_blueTitle.setTextColor(Color.BLACK);
+            tv_j_hexRepresentationTitle.setTextColor(Color.BLACK);
         }
     }
 }

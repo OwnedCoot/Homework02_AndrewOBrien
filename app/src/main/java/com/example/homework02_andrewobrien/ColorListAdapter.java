@@ -55,6 +55,12 @@ public class ColorListAdapter extends BaseAdapter
         TextView greenValue = view.findViewById(R.id.tv_v_cc_greenValue);
         TextView blueValue  = view.findViewById(R.id.tv_v_cc_blueValue);
         TextView hexValue   = view.findViewById(R.id.tv_v_cc_hexValue);
+
+        TextView redTitle = view.findViewById(R.id.tv_v_cc_redTitle);
+        TextView greenTitle = view.findViewById(R.id.tv_v_cc_greenTitle);
+        TextView blueTitle = view.findViewById(R.id.tv_v_cc_blueTitle);
+        TextView hexValueTitle = view.findViewById(R.id.tv_v_cc_hexValueTitle);
+
         ConstraintLayout background = view.findViewById(R.id.cl_v_cc_background);
 
         //get data from this specific color from the colorList
@@ -64,8 +70,45 @@ public class ColorListAdapter extends BaseAdapter
         //set the GUI for custom_cell
         redValue.setText(clr.getRedValue());
         greenValue.setText(clr.getGreenValue());
-        blueValue.setText(clr.getGreenValue());
+        blueValue.setText(clr.getBlueValue());
         hexValue.setText(clr.getHexValue());
+
+        //===============COLOR CHANGE================
+        //change the color of the text if it is too dark or too bright
+        String hexString = hexValue.getText().toString();
+        int colorIntForm = Color.parseColor(hexString);
+
+        int red = Color.red(colorIntForm);
+        int green = Color.green(colorIntForm);
+        int blue = Color.blue(colorIntForm);
+
+        //calculation I found on stackoverflow to calculate brightness
+        double brightness = (red * 0.299 + green * 0.587 + blue * 0.114);
+
+        if (brightness < 128)
+        {
+            redValue.setTextColor(Color.WHITE);
+            greenValue.setTextColor(Color.WHITE);
+            blueValue.setTextColor(Color.WHITE);
+            redTitle.setTextColor(Color.WHITE);
+            greenTitle.setTextColor(Color.WHITE);
+            blueTitle.setTextColor(Color.WHITE);
+            hexValueTitle.setTextColor(Color.WHITE);
+            hexValue.setTextColor(Color.WHITE);
+        }
+        else
+        {
+            redValue.setTextColor(Color.BLACK);
+            greenValue.setTextColor(Color.BLACK);
+            blueValue.setTextColor(Color.BLACK);
+            redTitle.setTextColor(Color.BLACK);
+            greenTitle.setTextColor(Color.BLACK);
+            blueTitle.setTextColor(Color.BLACK);
+            hexValueTitle.setTextColor(Color.BLACK);
+            hexValueTitle.setTextColor(Color.BLACK);
+        }
+        //===============COLOR CHANGE================
+
         background.setBackgroundColor(Color.parseColor(hexValue.getText().toString()));
 
         return view;
